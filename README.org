@@ -1,0 +1,49 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:{} arch:headline author:t
+#+options: broken-links:mark c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:t todo:t |:t
+#+title: README
+#+date: <2022-02-18 Fri>
+#+author: Nasy
+#+email: nasyxx@gmail.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 29.0.50 (Org mode 9.5.2)
+
+#+begin_src emacs-lisp :tangle (expand-file-name "bibtex-tidy.el")
+  ;;; bibtex-tidy.el --- Utility to sort Python imports -*- lexical-binding: t; -*-
+
+  (require 'reformatter)
+
+  (defcustom bibtex-tidy-command "bibtex-tidy"
+    "Name of the `bibtex-tidy` executable."
+    :group 'nasy
+    :type 'string)
+
+  (defvar bibtex-tidy--base-args '("--curly" "--wrap")
+    "Base arguments to pass to bibtex-tidy.")
+
+  (defcustom bibtex-tidy-extra-args nil
+    "Extra arguments to pass to bibtex-tidy."
+    :group 'nasy
+    :type '(repeat string))
+
+  ;;;###autoload (autoload 'bibtex-tidy-buffer "bibtex-tidy" nil t)
+  ;;;###autoload (autoload 'bibtex-tidy-region "bibtex-tidy" nil t)
+  ;;;###autoload (autoload 'bibtex-tidy-on-save-mode "bibtex-tidy" nil t)
+  (reformatter-define bibtex-tidy
+    :program bibtex-tidy-command
+    :args (bibtex-tidy--make-args beg end)
+    :lighter " b/tidy"
+    :group 'bibtex-tidy)
+
+  (defun bibtex-tidy--make-args (beg end)
+    "Helper to build the argument list for bibtex-tidy for span BEG to END."
+    (append bibtex-tidy--base-args
+            bibtex-tidy-extra-args
+            '("-")))
+
+  (provide 'bibtex-tidy)
+  ;;; bibtex-tidy.el ends here
+#+end_src
