@@ -11,6 +11,8 @@
 #+exclude_tags: noexport
 #+creator: Emacs 29.0.50 (Org mode 9.5.2)
 
+Emacs minor mode for https://github.com/FlamingTempura/bibtex-tidy
+
 #+begin_src emacs-lisp :tangle (expand-file-name "bibtex-tidy.el")
   ;;; bibtex-tidy.el --- Utility to sort Python imports -*- lexical-binding: t; -*-
 
